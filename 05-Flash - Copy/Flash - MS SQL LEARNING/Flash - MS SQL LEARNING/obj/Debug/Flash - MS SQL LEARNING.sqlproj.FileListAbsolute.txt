@@ -1,0 +1,10 @@
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\bin\Debug\Flash - MS SQL LEARNING.dacpac
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\bin\Debug\Flash___MS_SQL_LEARNING.dll
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\bin\Debug\Flash___MS_SQL_LEARNING.pdb
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\obj\Debug\Flash - MS SQL LEARNING.sqlproj.AssemblyReference.cache
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\obj\Debug\Model.xml
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\obj\Debug\refactor.xml
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\obj\Debug\postdeploy.sql
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\obj\Debug\predeploy.sql
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\obj\Debug\Flash___MS_SQL_LEARNING.dll
+C:\MEGA\WIP\05-Flash\Flash - MS SQL LEARNING\Flash - MS SQL LEARNING\obj\Debug\Flash___MS_SQL_LEARNING.pdb

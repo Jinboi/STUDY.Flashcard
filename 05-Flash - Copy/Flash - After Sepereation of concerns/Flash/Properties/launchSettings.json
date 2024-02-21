@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Flash": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\MEGA\\WIP\\05-Flash\\Flash"
+    }
+  }
+}
