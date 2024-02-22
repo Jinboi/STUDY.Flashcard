@@ -56,6 +56,7 @@ namespace Flash
                         break;
                     case "6":
                         Console.WriteLine("Delete a Flashcard");
+                        DeleteFlashcards.GetDeleteFlashcards(currentWorkingStack);
                         break;
 
                     default:
@@ -71,6 +72,5 @@ namespace Flash
             }
         }
 
-        
     }
 }

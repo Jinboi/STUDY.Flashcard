@@ -3,27 +3,27 @@ using System.Data.SqlClient;
 
 namespace Flash
 {
-    internal class EditFlashcards
+    internal class DeleteFlashcards
     {
         static string connectionString = "Data Source=(LocalDB)\\LocalDBDemo;Integrated Security=True";
-        public static void GetEditFlashcards(string currentWorkingStack)
+        internal static void GetDeleteFlashcards(string currentWorkingStack)
         {
             Console.WriteLine($"Current Stack: {currentWorkingStack}\n");
 
             ViewAllFlashcards.GetViewAllFlashcards(currentWorkingStack);
 
-            Console.WriteLine("What to edit?");
+            Console.WriteLine("What to delete?");
             string currentWorkingFlashcardString = Console.ReadLine();
             int currentWorkingFlashcardId;
 
             if (Int32.TryParse(currentWorkingFlashcardString, out currentWorkingFlashcardId))
             {
-                
+
                 Console.WriteLine($"Selected Flashcard_Primary_Id: {currentWorkingFlashcardId}");
             }
             else
             {
-                Console.WriteLine("Unable to convert the string to an integer.");          
+                Console.WriteLine("Unable to convert the string to an integer.");
             }
 
             try
@@ -32,7 +32,7 @@ namespace Flash
                 {
                     connection.Open();
                     connection.ChangeDatabase("DataBaseFlashCard");
-                    
+
                     string getCurrentFlashcardIdQuery =
                         $@"SELECT Flashcard_Primary_Id, Front, Back, Stack_Primary_Id  
                            FROM Flashcards 
@@ -42,7 +42,7 @@ namespace Flash
                     {
                         object result = getCurrentFlashcardIdCommand.ExecuteScalar();
                         if (result != null && result != DBNull.Value)
-                        {                           
+                        {
                             List<FlashcardDto> flashcards = new List<FlashcardDto>();
                             using (SqlCommand command = new SqlCommand(getCurrentFlashcardIdQuery, connection))
                             {
@@ -84,25 +84,19 @@ namespace Flash
                         }
                     }
 
-                    Console.WriteLine("Update Front");
-                    string updatedFront = Console.ReadLine();
-                    Console.WriteLine("Update Back");
-                    string updatedBack = Console.ReadLine();
-
+                    Console.WriteLine("Deleting this flashcard");
+                    
                     // Update the flashcard with the new front and back
-                    string updateFlashcardQuery =
-                        @"UPDATE Flashcards 
-                        SET Front = @UpdatedFront, Back = @UpdatedBack 
+                    string deleteFlashcardQuery =
+                        @"DELETE FROM Flashcards 
                         WHERE Flashcard_Primary_Id = @FlashcardId";
 
-                    using (SqlCommand updateCommand = new SqlCommand(updateFlashcardQuery, connection))
+                    using (SqlCommand deleteCommand = new SqlCommand(deleteFlashcardQuery, connection))
                     {
-                        updateCommand.Parameters.AddWithValue("@UpdatedFront", updatedFront);
-                        updateCommand.Parameters.AddWithValue("@UpdatedBack", updatedBack);
-                        updateCommand.Parameters.AddWithValue("@FlashcardId", currentWorkingFlashcardId);
+                        deleteCommand.Parameters.AddWithValue("@FlashcardId", currentWorkingFlashcardId);
 
-                        int rowsAffected = updateCommand.ExecuteNonQuery();
-                        Console.WriteLine($"{rowsAffected} row(s) updated.");
+                        int rowsAffected = deleteCommand.ExecuteNonQuery();
+                        Console.WriteLine($"{rowsAffected} row(s) deleted.");
                     }
                 }
             }
@@ -114,3 +108,4 @@ namespace Flash
         }
     }
 }
+

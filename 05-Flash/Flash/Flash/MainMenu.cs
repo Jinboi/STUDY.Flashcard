@@ -52,13 +52,15 @@ static internal class MainMenu
                     ManageStacks.GetManageStacks();
                     break;
                 case "2":
-                    Console.WriteLine("Execute Insert");
+                    Console.WriteLine("Manage Flashcards");
+                    Console.WriteLine("Not sure what this function supposed to do");
                     break;
                 case "3":
-                    Console.WriteLine("Execute Delete");
+                    Console.WriteLine("Study");
+                    Study.GetStudy();
                     break;
                 case "4":
-                    Console.WriteLine("Execute Update");
+                    Console.WriteLine("View study session data");
                     break;
 
                 default:
@@ -67,4 +69,6 @@ static internal class MainMenu
             }
         }
     }
+
+    
 }
