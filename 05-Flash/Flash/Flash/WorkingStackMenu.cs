@@ -39,17 +39,20 @@ namespace Flash
                         ManageStacks.GetManageStacks();
                         break;
                     case "2":
-                        Console.WriteLine("View All Flashcards in Stack");                        
+                        Console.WriteLine("View All Flashcards in Stack");
+                        ViewAllFlashcards.GetViewAllFlashcards(currentWorkingStack);
                         break;
                     case "3":
                         Console.WriteLine("View X amount of cards in stack");
+                        ViewXAmountFlashcards.GetViewXAmountFlashcards(currentWorkingStack);
                         break;
                     case "4":
                         Console.WriteLine("Create a Flashcard in current stack");
-                        CreateFlashcard.GetCreateFlashcard();
+                        CreateFlashcard.GetCreateFlashcard(currentWorkingStack);
                         break;
                     case "5":
                         Console.WriteLine("Edit a Flashcard");
+                        EditFlashcards.GetEditFlashcards(currentWorkingStack);
                         break;
                     case "6":
                         Console.WriteLine("Delete a Flashcard");
@@ -67,5 +70,7 @@ namespace Flash
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
+
+        
     }
 }

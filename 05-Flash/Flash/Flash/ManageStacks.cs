@@ -112,7 +112,7 @@ internal class ManageStacks
                 string checkDuplicatedStackQuery =
                     @$"SELECT COUNT(*) 
                     FROM dbo.Stacks 
-                    WHERE name = '{currentWorkingStack}'";
+                    WHERE Name = '{currentWorkingStack}'";
 
                 using (SqlCommand checkDuplicatedStackCommand = new SqlCommand(checkDuplicatedStackQuery, connection))
                 { 
