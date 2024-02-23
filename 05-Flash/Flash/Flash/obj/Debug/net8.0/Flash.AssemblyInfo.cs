@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Flash")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71e57e2d8cecb6625e376333587386284340dc29")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e58721bc2fc5f9913f85a321a853cc2c6273eb26")]
 [assembly: System.Reflection.AssemblyProductAttribute("Flash")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Flash")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
