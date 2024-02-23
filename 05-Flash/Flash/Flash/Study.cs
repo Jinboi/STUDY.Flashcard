@@ -1,6 +1,7 @@
 ﻿
 using Spectre.Console;
 using System.Data.SqlClient;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Flash
 {
@@ -55,6 +56,7 @@ namespace Flash
                     }
                 }
 
+
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
@@ -74,15 +76,22 @@ namespace Flash
                 {
                     Console.WriteLine("Unable to convert the string to an integer.");
                 }
+            }
 
-                Console.ReadLine();
+            CreateStudyTable();
+        }
 
 
-
+        internal static void CreateStudyTable()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                connection.ChangeDatabase("DataBaseFlashCard");
 
                 // Check if 'Stacks' table exists
                 string checkTableQuery =
-                    @"SELECT COUNT(*) 
+                @"SELECT COUNT(*) 
                         FROM INFORMATION_SCHEMA.TABLES 
                         WHERE TABLE_NAME = 'Study'";
 
@@ -111,16 +120,42 @@ namespace Flash
                     }
                 }
                 Console.ReadLine();
+            }
+
+            ShowFlashcardToStudy();
+        }
+
+        internal static void ShowFlashcardToStudy()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                connection.ChangeDatabase("DataBaseFlashCard");
 
                 Console.WriteLine("Showing first flashcard and so on");
+
+                Console.WriteLine("Insert the Stack_Priamry_Id of the stack you want to study");
+
+                string studyStackString = Console.ReadLine();
+                int studyStack;
+
+                if (Int32.TryParse(studyStackString, out studyStack))
+                {
+
+                    Console.WriteLine($"Selected Stack_Primary_Id: {studyStack}");
+                }
+                else
+                {
+                    Console.WriteLine("Unable to convert the string to an integer.");
+                }
 
 
                 int totalNumberOfFlashCardsInThatStack;
 
                 string totalNumberOfFlashCardsInThatStackString =
                             @$"SELECT COUNT(*) 
-                            FROM Flashcards
-                            WHERE Stack_Primary_ID = '{studyStack}'";
+                                FROM Flashcards
+                                WHERE Stack_Primary_ID = '{studyStack}'";
 
                 using (SqlCommand totalNumberOfFlashCardsInThatStackStringCommand = new SqlCommand(totalNumberOfFlashCardsInThatStackString, connection))
                 {
@@ -134,8 +169,8 @@ namespace Flash
                     // Query to select a limited number of rows from the Flashcards table for the current stack
                     string selectQuery =
                          $@"SELECT Flashcard_Primary_Id, Front, Back, Stack_Primary_Id
-                                       FROM Flashcards 
-                                       WHERE Stack_Primary_Id = @studyFlashcardCounter";
+                                           FROM Flashcards 
+                                           WHERE Stack_Primary_Id = @studyFlashcardCounter";
 
                     List<FlashcardDto> flashcards = new List<FlashcardDto>();
 
@@ -150,6 +185,8 @@ namespace Flash
                             // Check if any rows are returned
                             if (reader.HasRows)
                             {
+                                
+
                                 // Loop through each row and create DTOs
                                 while (reader.Read())
                                 {
@@ -161,7 +198,8 @@ namespace Flash
                                         Stack_Primary_Id = reader.GetInt32(3)
                                     };
                                     flashcards.Add(flashcard);
-                                }
+                                }                             
+
 
                                 RenumberFlashcards.GetRenumberFlashcards(flashcards);
 
@@ -189,22 +227,80 @@ namespace Flash
                                         wrongAnswer++;
                                         totalQuestions++;
                                     }
-                                }
-                                Console.WriteLine($"Your score of this study session is: {correctAnswer} out of {totalQuestions}");
-                            }
-
-                            else
-                            {
-                                Console.WriteLine("No flashcards found.");
+                                    // Record the study session
+                                    RecordToStudy(studyStack, correctAnswer, totalQuestions);
+                                }                                                              
                             }
                         }
                     }
-
                 }
-                    
-                //ADD TO scores to STUDY Stack
+            }
+        }
 
-            }            
-        }        
+
+
+        internal static void RecordToStudy(int studyStack, int correctAnswer, int totalQuestions)
+        {
+
+            Console.WriteLine($"Your score of this study session is: {correctAnswer} out of {totalQuestions}");
+
+            //ADD TO scores to STUDY Stack
+
+            // Calculate score as a float
+            float score = (float)correctAnswer / totalQuestions;
+
+            DateTime date = DateTime.Now;
+
+            Console.WriteLine($"score is {score}");
+            Console.WriteLine($"date is {date}");
+
+
+            Console.ReadLine();
+
+
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                connection.ChangeDatabase("DataBaseFlashCard");
+
+
+
+                // Insert flashcard into 'Flashcards' table
+                string insertStudyQuery =
+                @"INSERT INTO Flashcards (Date, Score, Stack_Primary_Id)
+                            VALUES (@Date, @Score, @StackPrimaryId)";
+
+                using (SqlCommand insertStudyCommand = new SqlCommand(insertStudyQuery, connection))
+                {
+                    // Add parameters
+                    insertStudyCommand.Parameters.AddWithValue("@Date", date);
+                    insertStudyCommand.Parameters.AddWithValue("@Score", score);
+                    insertStudyCommand.Parameters.AddWithValue("@StackPrimaryId", studyStack);
+
+                    // Execute the command
+                    insertStudyCommand.ExecuteNonQuery();
+                    Console.WriteLine("Recorded StudySession Data successfully.");
+                }
+
+
+            }
+
+
+
+        }
     }
 }
+
+
+                           
+
+
+            
+        
+
+
+
+
+                     
+
