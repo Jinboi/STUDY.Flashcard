@@ -26,13 +26,16 @@ static internal class MainMenu
                         .RoundedBorder()
                         .BorderColor(Color.Yellow));
 
-            // Create a list of Items, apply separate styles to each
-            var rows = new List<Text>(){
+            
+
+                // Create a list of Items, apply separate styles to each
+                var rows = new List<Text>(){
             new Text("-Type 0 to Exit", new Style(Color.Red, Color.Black)),
             new Text("-Type 1 to Manage Stacks", new Style(Color.Green, Color.Black)),
             new Text("-Type 2 to Manage Flashcards", new Style(Color.Blue, Color.Black)),
             new Text("-Type 3 to Study", new Style(Color.Purple, Color.Black)),
             new Text("-Type 4 to View Study Session Data", new Style(Color.Orange3, Color.Black)),
+            new Text("-Type 5 to Delete a Stack",  new Style(Color.Aqua, Color.Black))
             };
 
             // Renders each item with own style
@@ -53,7 +56,7 @@ static internal class MainMenu
                     break;
                 case "2":
                     Console.WriteLine("Manage Flashcards");
-                    Console.WriteLine("Not sure what this function supposed to do");
+                    ViewAllFlashcardsRegardlessOfStacks.GetViewAllFlashcardsRegardlessOfStacks();
                     break;
                 case "3":
                     Console.WriteLine("Study");
@@ -61,6 +64,11 @@ static internal class MainMenu
                     break;
                 case "4":
                     Console.WriteLine("View study session data");
+                    ViewStudySessionData.GetViewStudySessionData();
+                    break;                
+                case "5":
+                    Console.WriteLine("Delete a Stack");
+                    DeleteStacks.GetDeleteStacks();
                     break;
 
                 default:
@@ -70,5 +78,5 @@ static internal class MainMenu
         }
     }
 
-    
+   
 }

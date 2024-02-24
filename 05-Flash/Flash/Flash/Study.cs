@@ -62,27 +62,34 @@ namespace Flash
                     Console.WriteLine("Error: " + ex.Message);
                 }
 
-                Console.WriteLine("Insert the Stack_Priamry_Id of the stack you want to study");
-
-                string studyStackString = Console.ReadLine();
-                int studyStack;
-
-                if (Int32.TryParse(studyStackString, out studyStack))
-                {
-
-                    Console.WriteLine($"Selected Stack_Primary_Id: {studyStack}");
-                }
-                else
-                {
-                    Console.WriteLine("Unable to convert the string to an integer.");
-                }
             }
+            
 
-            CreateStudyTable();
+            int studyStack = SetUpStudyStack();
+            CreateStudyTable(studyStack);
+            (int correctAnswer, int totalQuestions) = ShowFlashcardToStudy(studyStack);
+            RecordToStudy(studyStack, correctAnswer, totalQuestions);
         }
 
+        internal static int SetUpStudyStack()
+        {
+            Console.WriteLine("Insert the Stack_Priamry_Id of the stack you want to study");
 
-        internal static void CreateStudyTable()
+            string studyStackString = Console.ReadLine();
+            int studyStack;
+
+            if (Int32.TryParse(studyStackString, out studyStack))
+            {
+                Console.WriteLine($"Selected Stack_Primary_Id: {studyStack}");                
+            }
+            else
+            {
+                Console.WriteLine("something's wrong");
+            }                
+            return studyStack;            
+        }
+
+        internal static void CreateStudyTable(int studyStack)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -105,7 +112,7 @@ namespace Flash
                             @"CREATE TABLE Study (
                                 Study_Primary_Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
                                 Date DATE NOT NULL,
-                                Score FLOAT NOT NULL,
+                                Score INT NOT NULL,
                                 Stack_Primary_Id INT FOREIGN KEY REFERENCES Stacks(Stack_Primary_Id)
                             )";
                         using (SqlCommand createTableCommand = new SqlCommand(createStacksTableQuery, connection))
@@ -122,32 +129,21 @@ namespace Flash
                 Console.ReadLine();
             }
 
-            ShowFlashcardToStudy();
         }
 
-        internal static void ShowFlashcardToStudy()
+        internal static (int, int) ShowFlashcardToStudy(int studyStack)
         {
+            int correctAnswer = 0;
+            int wrongAnswer = 0;
+            int totalQuestions = 0;
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                connection.ChangeDatabase("DataBaseFlashCard");
+                connection.ChangeDatabase("DataBaseFlashCard");                
 
-                Console.WriteLine("Showing first flashcard and so on");
-
-                Console.WriteLine("Insert the Stack_Priamry_Id of the stack you want to study");
-
-                string studyStackString = Console.ReadLine();
-                int studyStack;
-
-                if (Int32.TryParse(studyStackString, out studyStack))
-                {
-
-                    Console.WriteLine($"Selected Stack_Primary_Id: {studyStack}");
-                }
-                else
-                {
-                    Console.WriteLine("Unable to convert the string to an integer.");
-                }
+                
+                //get the total number of flashcards
 
 
                 int totalNumberOfFlashCardsInThatStack;
@@ -204,9 +200,7 @@ namespace Flash
                                 RenumberFlashcards.GetRenumberFlashcards(flashcards);
 
 
-                                int correctAnswer = 0;
-                                int wrongAnswer = 0;
-                                int totalQuestions = 0;
+                                
                                 // Display flashcards
                                 foreach (var flashcard in flashcards)
                                 {
@@ -226,15 +220,16 @@ namespace Flash
                                         Console.WriteLine("Incorrect!");
                                         wrongAnswer++;
                                         totalQuestions++;
-                                    }
-                                    // Record the study session
-                                    RecordToStudy(studyStack, correctAnswer, totalQuestions);
-                                }                                                              
+                                    }                                    
+                                }
+                                Console.WriteLine($"you got {correctAnswer} correct out of {totalQuestions}");
+
                             }
                         }
                     }
                 }
             }
+            return (correctAnswer, totalQuestions);
         }
 
 
@@ -246,8 +241,9 @@ namespace Flash
 
             //ADD TO scores to STUDY Stack
 
-            // Calculate score as a float
-            float score = (float)correctAnswer / totalQuestions;
+            // Calculate score as an integer
+            int score = (int)((float)correctAnswer / totalQuestions);
+
 
             DateTime date = DateTime.Now;
 
@@ -268,7 +264,7 @@ namespace Flash
 
                 // Insert flashcard into 'Flashcards' table
                 string insertStudyQuery =
-                @"INSERT INTO Flashcards (Date, Score, Stack_Primary_Id)
+                @"INSERT INTO Study (Date, Score, Stack_Primary_Id)
                             VALUES (@Date, @Score, @StackPrimaryId)";
 
                 using (SqlCommand insertStudyCommand = new SqlCommand(insertStudyQuery, connection))
