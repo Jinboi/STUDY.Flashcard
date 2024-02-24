@@ -35,7 +35,7 @@ namespace Flash
                                     {
                                         Study_Primary_Id = reader.GetInt32(0),
                                         Date = reader.GetDateTime(1),
-                                        Score = reader.GetInt32(2),
+                                        Score = reader.GetString(2),
                                         Stack_Primary_Id = reader.GetInt32(3)
                                     };
                                     studys.Add(study);

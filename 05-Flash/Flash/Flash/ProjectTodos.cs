@@ -3,9 +3,15 @@ namespace Flash
 {
     internal class ProjectTodos
     {
-        //Fix study function showing all stacks instead of just 1
-        //Add view all study sessions function
-        //Maybe add DTO for stacks and study?  WIP -> change score float to score int and delete the study table data as it has float data already
+
+        //First Draft - Functional Only - Done
+            //Fix study function showing all stacks instead of just 1 - DONE 
+            //Add view all study sessions function - DONE 
+            //Maybe add DTO for stacks and study? DONE - need to fix format
+
+        //Second Draft - Clean Codes
+        
+
 
     }
 }

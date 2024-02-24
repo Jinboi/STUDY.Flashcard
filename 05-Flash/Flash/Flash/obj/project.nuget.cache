@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wAS8MhdGjAb5uA/1mPusdewl0frS2cJhiiS+aIvV2rbQIj7dDy7ZvIxcVVvbatqHavs2LH/sr+iGen+LKIgVfg==",
+  "dgSpecHash": "RVcXEb6jkUqxbBmQJ3Dn3/rfZdao0wwDJz9bIEZcKs0C7x4ljpC4cKxFj9G/KGyiy7BxNCZhXCNV0kloE66lcQ==",
   "success": true,
-  "projectFilePath": "C:\\MEGA\\WIP\\STUDY.Flashcard\\05-Flash\\Flash\\Flash\\Flash.csproj",
+  "projectFilePath": "C:\\MEGA\\WIP\\NEW\\STUDY.Flashcard\\05-Flash\\Flash\\Flash\\Flash.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\duddn\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\duddn\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

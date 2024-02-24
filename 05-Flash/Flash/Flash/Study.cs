@@ -11,7 +11,7 @@ namespace Flash
         internal static void GetStudy()
         {
             Console.Clear();
-            AnsiConsole.Write
+            AnsiConsole.Writexw
                     (
                         new FigletText("Study")
                             .LeftJustified()
@@ -112,7 +112,7 @@ namespace Flash
                             @"CREATE TABLE Study (
                                 Study_Primary_Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
                                 Date DATE NOT NULL,
-                                Score INT NOT NULL,
+                                Score NVARCHAR(50) NOT NULL,
                                 Stack_Primary_Id INT FOREIGN KEY REFERENCES Stacks(Stack_Primary_Id)
                             )";
                         using (SqlCommand createTableCommand = new SqlCommand(createStacksTableQuery, connection))
@@ -159,74 +159,73 @@ namespace Flash
                     Console.WriteLine($"This is the total number = {totalNumberOfFlashCardsInThatStack}");
                 }
 
-                for (int studyFlashcardCounter = 1; studyFlashcardCounter <= totalNumberOfFlashCardsInThatStack; studyFlashcardCounter++)
+                
+
+                // Query to select a limited number of rows from the Flashcards table for the current stack
+                string selectQuery =
+                        $@"SELECT Flashcard_Primary_Id, Front, Back, Stack_Primary_Id
+                                        FROM Flashcards 
+                                        WHERE Stack_Primary_Id = @studyStackId";
+
+                List<FlashcardDto> flashcards = new List<FlashcardDto>();
+
+                using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
+                    // Add parameters
+                    command.Parameters.AddWithValue("@studyStackId", studyStack);
 
-                    // Query to select a limited number of rows from the Flashcards table for the current stack
-                    string selectQuery =
-                         $@"SELECT Flashcard_Primary_Id, Front, Back, Stack_Primary_Id
-                                           FROM Flashcards 
-                                           WHERE Stack_Primary_Id = @studyFlashcardCounter";
-
-                    List<FlashcardDto> flashcards = new List<FlashcardDto>();
-
-                    using (SqlCommand command = new SqlCommand(selectQuery, connection))
+                    // Execute the command and retrieve the data
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        // Add parameters
-                        command.Parameters.AddWithValue("@studyFlashcardCounter", studyFlashcardCounter);
-
-                        // Execute the command and retrieve the data
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        // Check if any rows are returned
+                        if (reader.HasRows)
                         {
-                            // Check if any rows are returned
-                            if (reader.HasRows)
+                                
+
+                            // Loop through each row and create DTOs
+                            while (reader.Read())
                             {
-                                
-
-                                // Loop through each row and create DTOs
-                                while (reader.Read())
+                                FlashcardDto flashcard = new FlashcardDto
                                 {
-                                    FlashcardDto flashcard = new FlashcardDto
-                                    {
-                                        Flashcard_Primary_Id = reader.GetInt32(0),
-                                        Front = reader.GetString(1),
-                                        Back = reader.GetString(2),
-                                        Stack_Primary_Id = reader.GetInt32(3)
-                                    };
-                                    flashcards.Add(flashcard);
-                                }                             
+                                    Flashcard_Primary_Id = reader.GetInt32(0),
+                                    Front = reader.GetString(1),
+                                    Back = reader.GetString(2),
+                                    Stack_Primary_Id = reader.GetInt32(3)
+                                };
+                                flashcards.Add(flashcard);
+                            }                             
 
 
-                                RenumberFlashcards.GetRenumberFlashcards(flashcards);
+                            RenumberFlashcards.GetRenumberFlashcards(flashcards);
 
 
                                 
-                                // Display flashcards
-                                foreach (var flashcard in flashcards)
+                            // Display flashcards
+                            foreach (var flashcard in flashcards)
+                            {
+                                Console.WriteLine($"Front: {flashcard.Front}");
+                                Console.WriteLine("What's the back");
+
+                                string answer = Console.ReadLine();
+
+                                if (answer == flashcard.Back)
                                 {
-                                    Console.WriteLine($"Front: {flashcard.Front}");
-                                    Console.WriteLine("What's the back");
-
-                                    string answer = Console.ReadLine();
-
-                                    if (answer == flashcard.Back)
-                                    {
-                                        Console.WriteLine("Correct!");
-                                        correctAnswer++;
-                                        totalQuestions++;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Incorrect!");
-                                        wrongAnswer++;
-                                        totalQuestions++;
-                                    }                                    
+                                    Console.WriteLine("Correct!");
+                                    correctAnswer++;
+                                    totalQuestions++;
                                 }
-                                Console.WriteLine($"you got {correctAnswer} correct out of {totalQuestions}");
-
+                                else
+                                {
+                                    Console.WriteLine("Incorrect!");
+                                    wrongAnswer++;
+                                    totalQuestions++;
+                                }                                    
                             }
+                            Console.WriteLine($"you got {correctAnswer} correct out of {totalQuestions}");
+
                         }
                     }
+                    
                 }
             }
             return (correctAnswer, totalQuestions);
@@ -241,8 +240,10 @@ namespace Flash
 
             //ADD TO scores to STUDY Stack
 
-            // Calculate score as an integer
-            int score = (int)((float)correctAnswer / totalQuestions);
+            // Calculate score as an float
+            float floatScore = (float)correctAnswer / totalQuestions;
+
+            string score = floatScore.ToString();
 
 
             DateTime date = DateTime.Now;
