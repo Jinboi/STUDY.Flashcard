@@ -1,17 +1,13 @@
 ﻿using System.Data.SqlClient;
 
-namespace Flash;
-
-internal class ConnectFlashCardDatabase
+namespace Flash.ConfigureBeforeLaunching;
+internal class ConfigureFlashCardDatabase
 {
-    internal static void CreateFlashCardDatabase(string connectionString)
-    {
-        //create Flashcard database 
+    internal static void CreateFlashCardDatabase()
+    {        
         try
-        {
-
-            //create flashcards database
-            using (SqlConnection connection = new SqlConnection(connectionString))
+        {            
+            using (SqlConnection connection = new SqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();
 
@@ -39,13 +35,11 @@ internal class ConnectFlashCardDatabase
                         Console.WriteLine("Database 'DataBaseFlashCard' created already.");
                     }
                 }
-
-            }            
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine("Error: " + ex.Message);
         }
     }
-        
 }
