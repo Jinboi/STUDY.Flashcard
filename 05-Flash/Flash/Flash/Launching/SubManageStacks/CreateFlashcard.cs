@@ -28,8 +28,8 @@ internal class CreateFlashcard
         int currentWorkingStackId;
         string getCurrentStackIdQuery =
             $@"SELECT Stack_Primary_Id 
-                                       FROM Stacks 
-                                       WHERE Name = '{currentWorkingStack}'";
+            FROM Stacks 
+            WHERE Name = '{currentWorkingStack}'";
 
         using (SqlConnection connection = new SqlConnection(Configuration.ConnectionString))
         {
