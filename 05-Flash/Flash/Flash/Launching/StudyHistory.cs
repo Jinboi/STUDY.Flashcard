@@ -1,7 +1,4 @@
-﻿using System.Data.SqlClient;
-using Flash.Helper;
-using Flash.Helper.DTO;
-using Flash.Helper.Renumber;
+﻿using Flash.Helper.MainHelper;
 using Spectre.Console;
 
 namespace Flash.Launching;
@@ -17,5 +14,4 @@ internal class StudyHistory
 
         ReturnComment.MainMenuReturnComments();
     }
-
 }

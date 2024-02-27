@@ -1,5 +1,5 @@
 ﻿using Spectre.Console;
-using Flash.Helper;
+using Flash.Helper.MainHelper;
 
 namespace Flash.Launching;
 internal static class MainMenu

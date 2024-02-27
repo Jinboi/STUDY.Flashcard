@@ -1,7 +1,7 @@
 ﻿using Flash.Helper.Renumber;
 using System.Data.SqlClient;
 
-namespace Flash.Helper;
+namespace Flash.Helper.MainHelper;
 
 internal class ShowAllCardsInAllStacks
 {

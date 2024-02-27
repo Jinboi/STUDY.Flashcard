@@ -1,6 +1,6 @@
 ﻿using Spectre.Console;
 
-namespace Flash.Helper;
+namespace Flash.Helper.MainHelper;
 internal class CurrentStackMenuOptions
 {
     internal static void GetCurrentStackMenuOptions(string currentWorkingStack)

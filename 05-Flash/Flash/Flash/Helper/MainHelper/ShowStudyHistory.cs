@@ -2,7 +2,7 @@
 using Flash.Helper.Renumber;
 using System.Data.SqlClient;
 
-namespace Flash.Helper;
+namespace Flash.Helper.MainHelper;
 internal class ShowStudyHistory
 {
     internal static void GetShowStudyHistory()
@@ -20,11 +20,11 @@ internal class ShowStudyHistory
 
                 List<StudyDto> studys = new List<StudyDto>();
                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
-                {                   
+                {
                     using (SqlDataReader reader = command.ExecuteReader())
-                    {                        
+                    {
                         if (reader.HasRows)
-                        {                            
+                        {
                             while (reader.Read())
                             {
                                 StudyDto study = new StudyDto
@@ -38,7 +38,7 @@ internal class ShowStudyHistory
                             }
 
                             RenumberStudy.GetRenumberStudys(studys);
-                            
+
                             foreach (var study in studys)
                             {
                                 Console.WriteLine(@$"

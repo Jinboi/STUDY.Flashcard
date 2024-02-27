@@ -1,6 +1,6 @@
 ﻿using Spectre.Console;
 
-namespace Flash.Helper;
+namespace Flash.Helper.MainHelper;
 internal class ShowBanner
 {
     internal static void GetShowBanner(string figletText, Color figletColor)

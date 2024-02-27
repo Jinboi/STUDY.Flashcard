@@ -1,7 +1,7 @@
 ﻿using Flash.Launching;
 using System;
 
-namespace Flash.Helper;
+namespace Flash.Helper.MainHelper;
 internal class ExecuteMainMenuOptions
 {
     internal static void GetExecuteMainMenuOptions(string command, bool closeApp)

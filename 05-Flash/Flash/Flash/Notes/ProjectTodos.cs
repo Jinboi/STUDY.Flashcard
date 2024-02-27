@@ -3,10 +3,13 @@
     {
 
 
-
+    //Feb 25
     //Working on CreateFlashcards.cs right now
 
-
+    //Feb 26
+    //Need to check if study exsists before deleting a stack - DONE
+    //Renumbered stacksID but because of that, cannot delete stacks - DONE BY DELETING STACKS DTO
+    //Conduct Final Review Later
 
 
 

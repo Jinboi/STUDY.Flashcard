@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace Flash.Helper;
+namespace Flash.Helper.MainHelper;
 internal class CheckExistingStacks
 {
     internal static void GetCheckExistingStacks(string currentWorkingStack)

@@ -1,7 +1,7 @@
 ﻿using Flash.Launching.SubManageStacks;
 using Flash.Launching;
 
-namespace Flash.Helper;
+namespace Flash.Helper.MainHelper;
 
 internal class ExecuteCurrentStackMenuOptions
 {
