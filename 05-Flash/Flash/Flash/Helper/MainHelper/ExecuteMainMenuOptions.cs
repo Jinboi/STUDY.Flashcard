@@ -1,5 +1,4 @@
-﻿using Flash.Launching;
-using System;
+﻿using System;
 
 namespace Flash.Helper.MainHelper;
 internal class ExecuteMainMenuOptions
@@ -15,23 +14,23 @@ internal class ExecuteMainMenuOptions
                 break;
             case "1":
                 Console.WriteLine("Manage Stacks");
-                ManageStacks.GetManageStacks();
+                GameEngine.GetManageStacks();
                 break;
             case "2":
                 Console.WriteLine("Manage Flashcards");
-                ManageFlashcards.GetManageFlashcards();
+                GameEngine.GetManageFlashcards();
                 break;
             case "3":
                 Console.WriteLine("Study");
-                Study.GetStudy();
+                GameEngine.GetStudy();
                 break;
             case "4":
                 Console.WriteLine("View Study History");
-                StudyHistory.GetStudyHistory();
+                GameEngine.GetStudyHistory();
                 break;
             case "5":
                 Console.WriteLine("Delete a Stack");
-                DeleteStacks.GetDeleteStacks();
+                GameEngine.GetDeleteStacks();
                 break;
 
             default:

@@ -1,12 +1,12 @@
 ﻿using System.Data.SqlClient;
 
-namespace Flash.ConfigureBeforeLaunching;
+namespace Flash;
 internal class ConfigureFlashCardDatabase
 {
     internal static void CreateFlashCardDatabase()
-    {        
+    {
         try
-        {            
+        {
             using (SqlConnection connection = new SqlConnection(Configuration.ConnectionString))
             {
                 connection.Open();

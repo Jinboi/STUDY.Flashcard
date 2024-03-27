@@ -1,7 +1,4 @@
-﻿using Flash.Launching.SubManageStacks;
-using Flash.Launching;
-
-namespace Flash.Helper.MainHelper;
+﻿namespace Flash.Helper.MainHelper;
 
 internal class ExecuteCurrentStackMenuOptions
 {
@@ -11,31 +8,31 @@ internal class ExecuteCurrentStackMenuOptions
         {
             case "0":
                 Console.WriteLine("\nGoodbye!\n");
-                MainMenu.GetMainMenu();
+                GameEngine.GetMainMenu();
                 break;
             case "1":
                 Console.WriteLine("Change Current Stack");
-                ManageStacks.GetManageStacks();
+                GameEngine.GetManageStacks();
                 break;
             case "2":
                 Console.WriteLine("View All Flashcards in Stack");
-                ViewAllFlashcards.GetViewAllFlashcards(currentWorkingStack);
+                ManageStacksController.GetViewAllFlashcards(currentWorkingStack);
                 break;
             case "3":
                 Console.WriteLine("View X amount of cards in stack");
-                ViewXAmountFlashcards.GetViewXAmountFlashcards(currentWorkingStack);
+                ManageStacksController.GetViewXAmountFlashcards(currentWorkingStack);
                 break;
             case "4":
                 Console.WriteLine("Create a Flashcard in current stack");
-                CreateFlashcard.GetCreateFlashcard(currentWorkingStack);
+                ManageStacksController.GetCreateFlashcard(currentWorkingStack);
                 break;
             case "5":
                 Console.WriteLine("Edit a Flashcard");
-                EditFlashcards.GetEditFlashcards(currentWorkingStack);
+                ManageStacksController.GetEditFlashcards(currentWorkingStack);
                 break;
             case "6":
                 Console.WriteLine("Delete a Flashcard");
-                DeleteFlashcards.GetDeleteFlashcards(currentWorkingStack);
+                ManageStacksController.GetDeleteFlashcards(currentWorkingStack);
                 break;
 
             default:
